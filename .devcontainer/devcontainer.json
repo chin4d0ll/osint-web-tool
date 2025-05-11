@@ -1,0 +1,25 @@
+{
+  "name": "OSINT Web Tool Codespace",
+  "image": "mcr.microsoft.com/devcontainers/python:3.9-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/chrome:1": {},
+    "ghcr.io/devcontainers/features/chromedriver:1": {}
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y wget unzip && export CHROME_VERSION=$(google-chrome-stable --version | sed -E 's/.* ([0-9]+\\.[0-9]+\\.[0-9]+)\\.[0-9]+ .*/\\1/') && export CHROMEDRIVER_VERSION=$(curl -sS https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_VERSION}) && wget -q https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${CHROMEDRIVER_VERSION}/linux64/chromedriver-linux64.zip -O chromedriver.zip && unzip -o chromedriver.zip -d /tmp/ && sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && sudo chmod +x /usr/local/bin/chromedriver && rm chromedriver.zip && echo 'Chrome and ChromeDriver setup attempt via postCreateCommand.'",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  },
+  "forwardPorts": [5001, 3000],
+  "portsAttributes": {
+    "5001": {
+      "label": "Backend API",
+      "onAutoForward": "openPreview"
+    },
+    "3000": {
+      "label": "Frontend App",
+      "onAutoForward": "openPreview"
+    }
+  }
+}
