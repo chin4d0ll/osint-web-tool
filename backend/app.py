@@ -1,3 +1,5 @@
+import os
+import psycopg2
 from flask import Flask, jsonify, request # Add request
 from flask_cors import CORS
 import requests # Add requests
@@ -9,13 +11,84 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 app = Flask(__name__)
-CORS(app)
+CORS(app) # Enable CORS for all routes
+
+# Database connection details (should ideally be from environment variables in production)
+DB_HOST = "db"  # This is the service name from docker-compose.yml
+DB_NAME = "osintdb"
+DB_USER = "osintuser"
+DB_PASS = "osintpassword" # IMPORTANT: Use environment variables or secrets for production
+
+def get_db_connection():
+    """Establishes a connection to the PostgreSQL database."""
+    try:
+        conn = psycopg2.connect(host=DB_HOST, dbname=DB_NAME, user=DB_USER, password=DB_PASS)
+        return conn
+    except psycopg2.Error as e:
+        print(f"Error connecting to PostgreSQL database: {e}")
+        # In a real app, you might want to raise an exception or handle this more gracefully
+        return None
 
 @app.route('/')
-def index():
-    return jsonify({"message": "OSINT Tool Backend Running"})
+def home():
+    return "Hello from OSINT Tool Backend!"
 
-# New IP Lookup Endpoint
+@app.route('/db_test')
+def db_test():
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute("SELECT version();")
+            db_version = cur.fetchone()
+            cur.close()
+            conn.close()
+            return jsonify({"message": "Successfully connected to database!", "db_version": db_version})
+        except psycopg2.Error as e:
+            return jsonify({"message": "Database connection successful, but query failed.", "error": str(e)}), 500
+    else:
+        return jsonify({"message": "Failed to connect to database."}), 500
+
+# Example: Initialize database schema (run once or check if tables exist)
+def init_db():
+    conn = get_db_connection()
+    if not conn:
+        print("Could not connect to DB to initialize schema.")
+        return
+
+    try:
+        cur = conn.cursor()
+        # Example table - adjust to your needs for storing OSINT data
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS search_history (
+                id SERIAL PRIMARY KEY,
+                query TEXT NOT NULL,
+                source VARCHAR(100), -- e.g., 'twitter', 'ipinfo'
+                results JSONB,        -- Store results as JSON
+                risk_score INTEGER,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        # Add more tables as needed (e.g., users, api_keys, reports)
+        # cur.execute("""
+        #     CREATE TABLE IF NOT EXISTS users (
+        #         id SERIAL PRIMARY KEY,
+        #         username VARCHAR(80) UNIQUE NOT NULL,
+        #         email VARCHAR(120) UNIQUE NOT NULL,
+        #         password_hash VARCHAR(128) NOT NULL, -- Store hashed passwords!
+        #         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        #     );
+        # """)
+        conn.commit()
+        print("Database schema initialized (or already exists).")
+        cur.close()
+    except psycopg2.Error as e:
+        print(f"Error initializing database schema: {e}")
+        conn.rollback() # Rollback in case of error
+    finally:
+        if conn:
+            conn.close()
+
 @app.route('/ip_lookup', methods=['GET'])
 def ip_lookup():
     ip_address = request.args.get('ip')
@@ -116,4 +189,11 @@ def scrape_twitter_profile():
             driver.quit()
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001) # Changed port to 5001
+    # It's good practice to initialize DB schema outside of app run,
+    # but for simplicity in dev, we can call it here.
+    # In a production setup, you might use a separate script or migration tool.
+    print("Attempting to initialize database schema...")
+    init_db()
+    print("Starting Flask backend server...")
+    # Make sure to run on 0.0.0.0 to be accessible from outside the container in Codespaces
+    app.run(host='0.0.0.0', port=5001, debug=True)
