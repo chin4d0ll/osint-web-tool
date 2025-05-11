@@ -1,17 +1,53 @@
 {
   "name": "OSINT Web Tool Codespace",
-  "image": "mcr.microsoft.com/devcontainers/python:3.9-bullseye",
+  // Use Docker Compose file.
+  "dockerComposeFile": [
+    "../docker-compose.yml" // Path relative to .devcontainer folder
+  ],
+
+  // Service to connect to. This must be a service defined in docker-compose.yml.
+  "service": "app",
+
+  // Workspace folder inside the container.
+  "workspaceFolder": "/workspaces/osint-web-tool",
+
   "features": {
-    "ghcr.io/devcontainers/features/chrome:1": {},
-    "ghcr.io/devcontainers/features/chromedriver:1": {}
+    // Docker-in-Docker allows use of Docker CLI from within the 'app' service container
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+    // Chrome features remain commented out
+    // "ghcr.io/devcontainers/features/chrome:1": {},
+    // "ghcr.io/devcontainers/features/chromedriver:1": {}
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y wget unzip && export CHROME_VERSION=$(google-chrome-stable --version | sed -E 's/.* ([0-9]+\\.[0-9]+\\.[0-9]+)\\.[0-9]+ .*/\\1/') && export CHROMEDRIVER_VERSION=$(curl -sS https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_VERSION}) && wget -q https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${CHROMEDRIVER_VERSION}/linux64/chromedriver-linux64.zip -O chromedriver.zip && unzip -o chromedriver.zip -d /tmp/ && sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && sudo chmod +x /usr/local/bin/chromedriver && rm chromedriver.zip && echo 'Chrome and ChromeDriver setup attempt via postCreateCommand.'",
+
+  "postCreateCommand": "echo 'Dev container postCreateCommand: Python, Node, and Docker support are set up. PostgreSQL service \"db\" should be running via Docker Compose. Remember to install backend/frontend dependencies if not done.'",
+
   "customizations": {
     "vscode": {
-      "extensions": ["ms-python.python"]
+      "extensions": [
+        "ms-python.python",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker" // Docker extension for VS Code
+      ],
+      "settings": {
+        // Python interpreter should be auto-detected by the Python extension
+        // "python.defaultInterpreterPath": "/usr/local/py-utils/bin/python3",
+        "terminal.integrated.shell.linux": "/bin/bash"
+      }
     }
   },
-  "forwardPorts": [5001, 3000],
+
+  // Forward ports from the 'app' service and other services like 'db'.
+  "forwardPorts": [
+    5001, // Backend API (from 'app' service)
+    3000, // Frontend App (from 'app' service)
+    5432 // PostgreSQL (from 'db' service)
+  ],
   "portsAttributes": {
     "5001": {
       "label": "Backend API",
@@ -20,6 +56,11 @@
     "3000": {
       "label": "Frontend App",
       "onAutoForward": "openPreview"
+    },
+    "5432": {
+      "label": "PostgreSQL DB",
+      "onAutoForward": "silent" // Or "notify"
     }
   }
+  // "remoteUser": "vscode" // Default user in the 'app' service (defined by base image or Dockerfile)
 }
