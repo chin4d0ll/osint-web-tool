@@ -204,6 +204,26 @@ def scrape_twitter_profile():
             driver.quit()
 
 
+@app.route('/api/search', methods=['POST'])
+def handle_search():
+    data = request.get_json()
+    search_type = data.get('type')
+    search_value = data.get('value')
+
+    if not search_type or not search_value:
+        return jsonify({"error": "Missing 'type' or 'value' in request"}), 400
+
+    # Placeholder for actual OSINT logic
+    # For now, just return what was received
+    result = {
+        "message": "Search request received",
+        "search_type": search_type,
+        "search_value": search_value,
+        "data_found": [] # Placeholder for results
+    }
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     # It's good practice to initialize DB schema outside of app run,
     # but for simplicity in dev, we can call it here.
