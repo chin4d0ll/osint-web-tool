@@ -6,12 +6,9 @@
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
     },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "lts"
-    },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-  "postCreateCommand": "echo 'Dev Container พร้อมใช้งาน Python+Node.js แล้ว!'",
+  "postCreateCommand": "echo 'Dev Container (Python from feature, Node from image) ready!'",
   "customizations": {
     "vscode": {
       "extensions": [
