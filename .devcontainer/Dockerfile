@@ -2,12 +2,12 @@
 
 # Start from a base image that includes Python.
 # You can choose a specific Python version tag, e.g., python:3.9-slim-bullseye
-ARG PYTHON_VERSION=3.12-bullseye
-FROM mcr.microsoft.com/devcontainers/python:${PYTHON_VERSION}
 
-# [Optional] Install Node.js
-ARG NODE_VERSION="lts"
-RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} && nvm alias default ${NODE_VERSION}"
+# ใช้ base image ที่มีทั้ง Python และ Node.js
+FROM mcr.microsoft.com/devcontainers/python-node:3.12-bullseye
+
+
+## Node.js และ npm ติดตั้งมาแล้วใน base image ไม่ต้องติดตั้งซ้ำ
 
 # [Optional] Install Chrome and ChromeDriver for Selenium
 # This section can be expanded if you need specific versions or configurations
