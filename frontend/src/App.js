@@ -1,64 +1,85 @@
+
 import './App.css';
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react';
 
 function App() {
-  const [ipAddress, setIpAddress] = useState('');
-  const [lookupResult, setLookupResult] = useState(null);
-  const [error, setError] = useState('');
+  const [type, setType] = useState('username');
+  const [value, setValue] = useState('');
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleLookup = async () => {
-    if (!ipAddress) {
-      setError('Please enter an IP address.');
-      setLookupResult(null);
-      return;
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
     setError('');
-    setLookupResult(null);
+    setResult(null);
     try {
-      // Assuming backend is running on port 5001
-      const response = await fetch(`http://localhost:5001/ip_lookup?ip=${ipAddress}`);
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setLookupResult(data);
-    } catch (e) {
-      setError(e.message || 'Failed to fetch IP information.');
-      setLookupResult(null);
+      const res = await fetch('/api/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, value })
+      });
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      setResult(data.result);
+    } catch (err) {
+      setError('เกิดข้อผิดพลาดในการค้นหา');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>OSINT Tool - IP Lookup</h1>
-        <div>
-          <input
-            type="text"
-            value={ipAddress}
-            onChange={(e) => setIpAddress(e.target.value)}
-            placeholder="Enter IP Address (e.g., 8.8.8.8)"
-            disabled={loading}
-          />
-          <button onClick={handleLookup} disabled={loading}>
-            {loading ? 'Looking up...' : 'Lookup IP'}
-          </button>
-        </div>
-
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-
-        {lookupResult && (
-          <div style={{ textAlign: 'left', marginTop: '20px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}>
-            <h2>Lookup Result for {lookupResult.ip}</h2>
-            <pre>{JSON.stringify(lookupResult, null, 2)}</pre>
+    <div className="App" style={{ maxWidth: 600, margin: '2rem auto', fontFamily: 'sans-serif' }}>
+      <h2>OSINT Web Tool</h2>
+      <form onSubmit={handleSubmit} style={{ marginBottom: 24 }}>
+        <label>
+          ประเภทข้อมูล:
+          <select value={type} onChange={e => setType(e.target.value)} style={{ marginLeft: 8 }}>
+            <option value="username">Username</option>
+            <option value="email">Email</option>
+            <option value="ip">IP Address</option>
+          </select>
+        </label>
+        <input
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          placeholder="กรอกข้อมูลที่ต้องการค้นหา"
+          style={{ marginLeft: 12, padding: 4, width: 220 }}
+          required
+        />
+        <button type="submit" style={{ marginLeft: 12, padding: '4px 16px' }} disabled={loading}>
+          {loading ? 'กำลังค้นหา...' : 'ค้นหา'}
+        </button>
+      </form>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {result && (
+        <div style={{ background: '#f6f6f6', padding: 16, borderRadius: 8 }}>
+          <h3>ผลลัพธ์</h3>
+          {result.username && <div><b>Username:</b> {result.username}</div>}
+          {result.email && <div><b>Email:</b> {result.email}</div>}
+          {result.ip && <div><b>IP:</b> {result.ip}</div>}
+          <div><b>Risk Score:</b> {result.risk_score}</div>
+          <div><b>Breach Found:</b> {result.breach_found ? 'Yes' : 'No'}</div>
+          {result.breach_sources && result.breach_sources.length > 0 && (
+            <div><b>Breach Sources:</b> {result.breach_sources.join(', ')}</div>
+          )}
+          <div style={{ marginTop: 8 }}>
+            <b>Social Profiles:</b>
+            <ul>
+              {result.social_profiles.map((profile, idx) => (
+                <li key={idx}>
+                  {profile.platform}: {profile.found ? (
+                    <a href={profile.url} target="_blank" rel="noopener noreferrer">พบ</a>
+                  ) : 'ไม่พบ'}
+                </li>
+              ))}
+            </ul>
           </div>
-        )}
-      </header>
+        </div>
+      )}
     </div>
   );
 }

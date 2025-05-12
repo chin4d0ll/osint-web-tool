@@ -213,15 +213,26 @@ def handle_search():
     if not search_type or not search_value:
         return jsonify({"error": "Missing 'type' or 'value' in request"}), 400
 
-    # Placeholder for actual OSINT logic
-    # For now, just return what was received
-    result = {
-        "message": "Search request received",
+    # Mock OSINT logic: return fake data for demo
+    mock_result = {
+        "username": search_value if search_type == "username" else None,
+        "email": search_value if search_type == "email" else None,
+        "ip": search_value if search_type == "ip" else None,
+        "social_profiles": [
+            {"platform": "Facebook", "found": True, "url": f"https://facebook.com/{search_value}"},
+            {"platform": "Twitter", "found": False, "url": None},
+            {"platform": "Instagram", "found": True, "url": f"https://instagram.com/{search_value}"}
+        ],
+        "risk_score": 42,
+        "breach_found": True,
+        "breach_sources": ["HaveIBeenPwned", "Dehashed"]
+    }
+    return jsonify({
+        "message": "Search completed (mock)",
         "search_type": search_type,
         "search_value": search_value,
-        "data_found": [] # Placeholder for results
-    }
-    return jsonify(result)
+        "result": mock_result
+    })
 
 
 if __name__ == '__main__':
