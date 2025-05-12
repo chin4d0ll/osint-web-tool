@@ -1,4 +1,7 @@
 {
   "powershell.suppressAdditionalExeNotFoundWarning": true,
-  "githubPullRequests.ignoredPullRequestBranches": ["main"]
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "main"
+  ],
+  "markdown.validate.enabled": true
 }
