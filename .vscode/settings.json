@@ -1,0 +1,4 @@
+{
+  "powershell.suppressAdditionalExeNotFoundWarning": true,
+  "githubPullRequests.ignoredPullRequestBranches": ["main"]
+}
