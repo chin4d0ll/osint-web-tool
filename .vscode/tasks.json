@@ -6,7 +6,7 @@
 				"app.py"
 			],
 			"command": "python",
-			"group": "run",
+			"group": "none",
 			"isBackground": true,
 			"label": "Run Backend API (Flask)",
 			"problemMatcher": [
