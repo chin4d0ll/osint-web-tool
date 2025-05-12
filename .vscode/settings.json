@@ -1,4 +1,8 @@
 {
   "powershell.suppressAdditionalExeNotFoundWarning": true,
-  "githubPullRequests.ignoredPullRequestBranches": ["main"]
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "main"
+  ],
+  "markdown.validate.enabled": true,
+  "nxConsole.nxWorkspacePath": "../.codespaces/.persistedshare/empty-folder"
 }

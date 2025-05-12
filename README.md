@@ -28,7 +28,7 @@ This project is configured to run in a [Dev Container](https://code.visualstudio
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository_url>
+    git clone <https://github.com/chin4d0ll/osint-web-tool.git>
     cd osint-web-tool
     ```
 2.  **Open in Dev Container/Codespaces:**

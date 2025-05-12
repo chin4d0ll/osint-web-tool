@@ -1,0 +1,12 @@
+version: 2
+updates:
+  # อัปเดต dependencies ของ Python
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"  # ตั้งให้อัปเดตทุกวัน
+  # อัปเดต GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"  # ตั้งให้อัปเดตทุกสัปดาห์
