@@ -38,13 +38,14 @@ WORKDIR /workspaces/osint-web-tool
 
 # [Optional] Copy application dependency manifests to the container image.
 # This is often done to leverage Docker cache layers.
-# COPY backend/requirements.txt /tmp/pip-tmp/
-# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-#    && rm -rf /tmp/pip-tmp
+COPY backend/requirements.txt /tmp/pip-tmp/
+RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+   && rm -rf /tmp/pip-tmp
 
-# COPY frontend/package.json frontend/yarn.lock* frontend/package-lock.json* /tmp/npm-tmp/
-# RUN cd /tmp/npm-tmp && npm install --omit=dev && npm cache clean --force \
-#    && rm -rf /tmp/npm-tmp
+COPY frontend/package.json frontend/package-lock.json* /tmp/npm-tmp/
+# If you use yarn, you would also copy yarn.lock: frontend/yarn.lock*
+RUN cd /tmp/npm-tmp && npm install --omit=dev && npm cache clean --force \
+   && rm -rf /tmp/npm-tmp
 
 # [Optional] Expose ports (if your application listens on them)
 # EXPOSE 5001 3000
