@@ -25,5 +25,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  frontend:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: ["npm", "install"]
+
 volumes:
   postgres_data:
