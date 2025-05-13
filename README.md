@@ -1,55 +1,82 @@
-# OSINT Web Tool
 
-An Open Source Intelligence (OSINT) web-based tool designed to gather and analyze publicly available information. This project consists of a Python Flask backend and a React frontend.
+Markdown
+# OSINT Web Tool 🌐
 
-## Project Structure
+**A web-based tool for Open Source Intelligence (OSINT) gathering, enabling users to extract and analyze publicly available data for research, investigations, or cybersecurity.**
 
-- `/backend`: Contains the Python Flask application, API endpoints, and logic for OSINT data collection and processing.
-- `/frontend`: Contains the React application for the user interface.
-- `/docker-compose.yml`: Defines the services for running the application (e.g., backend, frontend, database).
-- `/.devcontainer`: Contains configurations for developing in a Dev Container or GitHub Codespaces.
+---
 
-## Technologies Used
+## 🚀 Features
+- **Data Extraction:** Gather information from multiple OSINT sources automatically.
+- **Data Analysis:** Analyze publicly available data for insights and correlations.
+- **Customizable Plugins:** Add new data sources or extend functionality easily with Python.
+- **Multi-Platform Support:** Works on Linux, macOS, and Windows.
+- **Multi-Language UI:** Supports both Thai 🇹🇭 and English.
 
-- **Backend**: Python, Flask, Selenium, PostgreSQL (or other as configured)
-- **Frontend**: React, JavaScript/TypeScript, HTML, CSS
-- **Containerization**: Docker
+---
 
-## Getting Started
+## 📖 Documentation
+### **Getting Started**
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/chin4d0ll/osint-web-tool.git
+   cd osint-web-tool
+Install dependencies:
+bash
+pip install -r requirements.txt
+Run the application:
+bash
+python app.py
+System Requirements
 
-### Prerequisites
+Python Version: 3.8 or higher
+Dependencies: Listed in requirements.txt
+Browser: A modern browser for the web interface (e.g., Chrome, Firefox)
+Supported OSINT Sources
 
-- Docker Desktop (or Docker Engine)
-- Git
+Social Media Platforms
+Public Databases
+Domain and IP Lookup
+Custom APIs (extendable)
+🔧 How to Use
 
-### Development Environment
+Run the tool:
+Open your browser and navigate to http://127.0.0.1:5000.
+Start a new scan:
+Enter a target (e.g., domain, IP, username).
+View results:
+Analyze the collected data directly from the dashboard.
+Export data:
+Save results as CSV or JSON for further analysis.
+🛠️ Development
 
-This project is configured to run in a [Dev Container](https://code.visualstudio.com/docs/remote/containers) or [GitHub Codespaces](https://github.com/features/codespaces).
+Contributing
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <https://github.com/chin4d0ll/osint-web-tool.git>
-    cd osint-web-tool
-    ```
-2.  **Open in Dev Container/Codespaces:**
-    - If using VS Code, it should prompt you to "Reopen in Container".
-    - If using GitHub Codespaces, a pre-configured environment will be created for you.
+We welcome contributions from the community! To get started:
 
-### Manual Setup (Alternative)
+Fork the repository.
+Create a new branch for your feature or bug fix.
+Submit a pull request with a detailed explanation.
+Testing
 
-Detailed instructions for manual setup of the backend and frontend can be found in their respective README files:
+To ensure everything works as expected:
 
-- [`backend/README.md`](backend/README.md)
-- [`frontend/README.md`](frontend/README.md)
+bash
+python -m unittest discover tests
+⚠️ Disclaimer
 
-## Running the Application
+This tool is designed for educational purposes only. Do not use it for illegal activities. The developers are not responsible for any misuse of this tool.
 
-(Instructions will depend on whether you are using Dev Containers, docker-compose directly, or running services manually. This section can be filled out in more detail later.)
+📬 Contact & Support
 
-## Contributing
+If you have any questions or feedback:
 
-(Details on how to contribute to the project, coding standards, etc.)
+Email: chin4d0ll@example.com
+GitHub Issues: Submit here
+❤️ Support Us
 
-## License
+If you find this tool helpful:
 
-(Specify the license for your project, e.g., MIT License)
+🌟 Star the repo
+🛠️ Contribute your code
+☕ Buy us a coffee (coming soon!)
