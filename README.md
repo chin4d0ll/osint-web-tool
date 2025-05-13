@@ -68,14 +68,17 @@ This tool is designed for educational purposes only. Do not use it for illegal a
 📬 Contact & Support
 
 If you have any questions or feedback
+
 GitHub Issues: Submit here
 
 Email: chin4d0ll@example.com
 
 ❤️ Support Us
+
 If you find this tool helpful:
 
 🌟 Star the repo
+
 🛠️ Contribute your code
 
 ☕ Buy us a coffee (coming soon!)
