@@ -17,7 +17,7 @@ function IpToIdentity() {
       const data = await res.json();
       setResult(data);
     } catch (err) {
-      setError('เกิดข้อผิดพลาดในการค้นหา IP');
+      setError('An error occurred while searching for IP.');
     } finally {
       setLoading(false);
     }
@@ -31,18 +31,18 @@ function IpToIdentity() {
           type="text"
           value={ip}
           onChange={e => setIp(e.target.value)}
-          placeholder="กรอก IP Address"
+          placeholder="Enter IP Address"
           style={{ padding: 4, width: 220 }}
           required
         />
         <button type="submit" style={{ marginLeft: 12, padding: '4px 16px' }} disabled={loading}>
-          {loading ? 'กำลังค้นหา...' : 'ค้นหา'}
+          {loading ? 'Searching...' : 'Search'}
         </button>
       </form>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {result && (
         <div style={{ background: '#f6f6f6', padding: 16, borderRadius: 8 }}>
-          <h4>ผลลัพธ์</h4>
+          <h4>Result</h4>
           <div><b>IP:</b> {result.ip}</div>
           <div><b>City:</b> {result.city}</div>
           <div><b>Region:</b> {result.region}</div>
@@ -50,7 +50,6 @@ function IpToIdentity() {
           <div><b>Location:</b> {result.loc}</div>
           <div><b>Org:</b> {result.org}</div>
           <div><b>Timezone:</b> {result.timezone}</div>
-          {/* เพิ่มข้อมูลอื่น ๆ ตามที่ API ส่งกลับมา */}
         </div>
       )}
     </div>

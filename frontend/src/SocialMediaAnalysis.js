@@ -22,7 +22,7 @@ function SocialMediaAnalysis() {
       const data = await res.json();
       setResult(data.result);
     } catch (err) {
-      setError('เกิดข้อผิดพลาดในการค้นหา');
+      setError('An error occurred while searching.');
     } finally {
       setLoading(false);
     }
@@ -45,18 +45,18 @@ function SocialMediaAnalysis() {
           type="text"
           value={username}
           onChange={e => setUsername(e.target.value)}
-          placeholder="กรอก username หรือ profile id"
+          placeholder="Enter username or profile id"
           style={{ marginLeft: 12, padding: 4, width: 220 }}
           required
         />
         <button type="submit" style={{ marginLeft: 12, padding: '4px 16px' }} disabled={loading}>
-          {loading ? 'กำลังค้นหา...' : 'ค้นหา'}
+          {loading ? 'Searching...' : 'Search'}
         </button>
       </form>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {result && (
         <div style={{ background: '#f6f6f6', padding: 16, borderRadius: 8 }}>
-          <h4>ผลลัพธ์</h4>
+          <h4>Result</h4>
           <div style={{ marginBottom: 12 }}>
             <b>Platform:</b> {result.platform}<br />
             <b>Username:</b> {result.username}<br />
