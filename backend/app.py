@@ -1,3 +1,128 @@
+# Risk Assessment API (mock)
+@app.route('/api/risk_assessment', methods=['POST'])
+def risk_assessment():
+    data = request.get_json()
+    target = data.get('target')
+    if not target:
+        return jsonify({'error': "Missing 'target' in request"}), 400
+
+    # MOCK: Replace with real risk analysis logic
+    mock_result = {
+        'target': target,
+        'risk_score': 82,
+        'summary': 'พบข้อมูลส่วนตัวรั่วไหลและมีความเสี่ยงสูงจากการใช้งานโซเชียลมีเดีย',
+        'details': [
+            'พบอีเมลในโพสต์สาธารณะ',
+            'มีการตั้งค่า privacy ต่ำ',
+            'พบข้อมูลในฐานข้อมูลรั่วไหล (breach)' 
+        ]
+    }
+
+    return jsonify({'result': mock_result})
+
+# Risk Assessment API (mock)
+@app.route('/api/risk_assessment', methods=['POST'])
+def risk_assessment():
+    data = request.get_json()
+    target = data.get('target')
+    if not target:
+        return jsonify({'error': "Missing 'target' in request"}), 400
+
+    # MOCK: Replace with real risk analysis logic
+    mock_result = {
+        'target': target,
+        'risk_score': 82,
+        'summary': 'พบข้อมูลส่วนตัวรั่วไหลและมีความเสี่ยงสูงจากการใช้งานโซเชียลมีเดีย',
+        'details': [
+            'พบอีเมลในโพสต์สาธารณะ',
+            'มีการตั้งค่า privacy ต่ำ',
+            'พบข้อมูลในฐานข้อมูลรั่วไหล (breach)'
+        ]
+    }
+    return jsonify({'result': mock_result})
+
+# Risk Assessment API (mock)
+@app.route('/api/risk_assessment', methods=['POST'])
+def risk_assessment():
+    data = request.get_json()
+    target = data.get('target')
+    if not target:
+        return jsonify({'error': "Missing 'target' in request"}), 400
+
+    # MOCK: Replace with real risk analysis logic
+    mock_result = {
+        'target': target,
+        'risk_score': 82,
+        'summary': 'พบข้อมูลส่วนตัวรั่วไหลและมีความเสี่ยงสูงจากการใช้งานโซเชียลมีเดีย',
+        'details': [
+            'พบอีเมลในโพสต์สาธารณะ',
+            'มีการตั้งค่า privacy ต่ำ',
+            'พบข้อมูลในฐานข้อมูลรั่วไหล (breach)'
+        ]
+    }
+    return jsonify({'result': mock_result})
+import os
+import psycopg2
+from flask import Flask, jsonify, request  # Add request
+from flask_cors import CORS
+import requests  # Add requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
+
+# ... (rest of your code)
+
+@app.route('/api/social_footprint', methods=['POST'])
+def social_footprint():
+    data = request.get_json()
+    platform = data.get('platform')
+    username = data.get('username')
+    if not platform or not username:
+        return jsonify({'error': "Missing 'platform' or 'username' in request"}), 400
+
+    # TODO: Implement real API/scraping logic for each platform
+    if platform == 'twitter':
+        # TODO: Use Twitter API or scraping logic here
+        pass
+    elif platform == 'facebook':
+        # TODO: Use Facebook Graph API or scraping logic here
+        pass
+    elif platform == 'instagram':
+        # TODO: Use Instagram Graph API or scraping logic here
+        pass
+    elif platform == 'linkedin':
+        # TODO: Use LinkedIn API or scraping logic here
+        pass
+
+    # MOCK: Replace with real API/scraping logic for each platform
+    mock_result = {
+        'platform': platform,
+        'username': username,
+        'profile_url': f'https://{platform}.com/{username}',
+        'name': 'John Doe',
+        'bio': 'This is a mock bio.',
+        'location': 'Bangkok, Thailand',
+        'work': 'Software Engineer',
+        'education': 'Chulalongkorn University',
+        'connections': 1234,
+        'public_posts': [
+            {'content': 'Hello world!', 'hashtags': ['#osint'], 'location': 'Bangkok', 'language': 'th'},
+            {'content': 'Security tips', 'hashtags': ['#security'], 'location': 'Bangkok', 'language': 'en'}
+        ],
+        'risk': {
+            'phone_found': False,
+            'email_found': True,
+            'address_found': False,
+            'privacy_score': 75
+        }
+    }
+    return jsonify({'result': mock_result})
 @app.route('/api/social_footprint', methods=['POST'])
 def social_footprint():
     data = request.get_json()
