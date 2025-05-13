@@ -10,7 +10,7 @@ function Dashboard() {
         <li>Risk Assessment Tool</li>
         <li>Commercial API Service</li>
       </ul>
-      <p>เลือกฟีเจอร์จากเมนูด้านบนเพื่อเริ่มต้น</p>
+      <p>Select a feature from the menu above to get started.</p>
     </div>
   );
 }
