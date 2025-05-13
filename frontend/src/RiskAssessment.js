@@ -15,7 +15,7 @@ function RiskAssessment() {
       const res = await fetch('/api/risk_assessment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ target })
+        body: JSON.stringify({ target }),
       });
       if (!res.ok) throw new Error('API error');
       const data = await res.json();
@@ -34,7 +34,7 @@ function RiskAssessment() {
         <input
           type="text"
           value={target}
-          onChange={e => setTarget(e.target.value)}
+          onChange={(e) => setTarget(e.target.value)}
           placeholder="Enter username, email, or IP"
           style={{ padding: 4, width: 260 }}
           required
@@ -47,15 +47,22 @@ function RiskAssessment() {
       {result && (
         <div style={{ background: '#f6f6f6', padding: 16, borderRadius: 8 }}>
           <h4>Risk Assessment Result</h4>
-          <div><b>Target:</b> {result.target}</div>
-          <div><b>Risk Score:</b> <span style={{ color: result.risk_score > 70 ? 'red' : 'green' }}>{result.risk_score}</span></div>
-          <div><b>Summary:</b> {result.summary}</div>
-          <div><b>Details:</b></div>
-          <ul>
-            {result.details && result.details.map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
-          </ul>
+          <div>
+            <b>Target:</b> {result.target}
+          </div>
+          <div>
+            <b>Risk Score:</b>{' '}
+            <span style={{ color: result.risk_score > 70 ? 'red' : 'green' }}>
+              {result.risk_score}
+            </span>
+          </div>
+          <div>
+            <b>Summary:</b> {result.summary}
+          </div>
+          <div>
+            <b>Details:</b>
+          </div>
+          <ul>{result.details && result.details.map((item, idx) => <li key={idx}>{item}</li>)}</ul>
         </div>
       )}
     </div>
