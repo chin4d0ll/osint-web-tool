@@ -18,7 +18,6 @@ CORS(app)
 
 
 
-# --- Social Media Footprint Analysis ---
 @app.route('/api/social_footprint', methods=['POST'])
 def social_footprint():
     data = request.get_json()
@@ -26,20 +25,6 @@ def social_footprint():
     username = data.get('username')
     if not platform or not username:
         return jsonify({'error': "Missing 'platform' or 'username' in request"}), 400
-
-    # TODO: Implement real API/scraping logic for each platform
-    if platform == 'twitter':
-        # TODO: Use Twitter API or scraping logic here
-        pass
-    elif platform == 'facebook':
-        # TODO: Use Facebook Graph API or scraping logic here
-        pass
-    elif platform == 'instagram':
-        # TODO: Use Instagram Graph API or scraping logic here
-        pass
-    elif platform == 'linkedin':
-        # TODO: Use LinkedIn API or scraping logic here
-        pass
 
     # MOCK: Replace with real API/scraping logic for each platform
     mock_result = {
@@ -53,7 +38,7 @@ def social_footprint():
         'education': 'Chulalongkorn University',
         'connections': 1234,
         'public_posts': [
-            {'content': 'Hello world!', 'hashtags': ['#osint'], 'location': 'Bangkok', 'language': 'th'},
+            {'content': 'Hello world!', 'hashtags': ['#osint'], 'location': 'Bangkok', 'language': 'en'},
             {'content': 'Security tips', 'hashtags': ['#security'], 'location': 'Bangkok', 'language': 'en'}
         ],
         'risk': {
@@ -78,11 +63,11 @@ def risk_assessment():
     mock_result = {
         'target': target,
         'risk_score': 82,
-        'summary': 'พบข้อมูลส่วนตัวรั่วไหลและมีความเสี่ยงสูงจากการใช้งานโซเชียลมีเดีย',
+        'summary': 'Personal data leak detected and high risk from social media usage.',
         'details': [
-            'พบอีเมลในโพสต์สาธารณะ',
-            'มีการตั้งค่า privacy ต่ำ',
-            'พบข้อมูลในฐานข้อมูลรั่วไหล (breach)'
+            'Email found in public posts',
+            'Low privacy settings detected',
+            'Data found in breach database'
         ]
     }
     return jsonify({'result': mock_result})
@@ -105,37 +90,7 @@ def commercial_api():
         }
     }
     return jsonify({'result': mock_result})
-@app.route('/api/social_footprint', methods=['POST'])
-def social_footprint():
-    data = request.get_json()
-    platform = data.get('platform')
-    username = data.get('username')
-    if not platform or not username:
-        return jsonify({'error': "Missing 'platform' or 'username' in request"}), 400
 
-    # MOCK: Replace with real API/scraping logic for each platform
-    mock_result = {
-        'platform': platform,
-        'username': username,
-        'profile_url': f'https://{platform}.com/{username}',
-        'name': 'John Doe',
-        'bio': 'This is a mock bio.',
-        'location': 'Bangkok, Thailand',
-        'work': 'Software Engineer',
-        'education': 'Chulalongkorn University',
-        'connections': 1234,
-        'public_posts': [
-            {'content': 'Hello world!', 'hashtags': ['#osint'], 'location': 'Bangkok', 'language': 'th'},
-            {'content': 'Security tips', 'hashtags': ['#security'], 'location': 'Bangkok', 'language': 'en'}
-        ],
-        'risk': {
-            'phone_found': False,
-            'email_found': True,
-            'address_found': False,
-            'privacy_score': 75
-        }
-    }
-    return jsonify({'result': mock_result})
 import os
 import psycopg2
 from flask import Flask, jsonify, request  # Add request
@@ -148,8 +103,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+
 
 # Database connection details (should ideally be from environment variables in production)
 DB_HOST = "db"  # This is the service name from docker-compose.yml
