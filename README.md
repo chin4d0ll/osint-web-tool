@@ -68,11 +68,10 @@ This tool is designed for educational purposes only. Do not use it for illegal a
 📬 Contact & Support
 
 If you have any questions or feedback:
-
 Email: chin4d0ll@example.com
 GitHub Issues: Submit here
-❤️ Support Us
 
+❤️ Support Us
 If you find this tool helpful:
 
 🌟 Star the repo
