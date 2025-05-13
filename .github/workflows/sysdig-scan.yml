@@ -55,8 +55,3 @@ jobs:
         # Sysdig inline scanner requires privileged rights
         run-as-user: root
 
-    # - uses: github/codeql-action/upload-sarif@v3
-    #   # Upload SARIF file (use static path if output variable is not set)
-    #   if: always()
-    #   with:
-    #     sarif_file: results.sarif

@@ -1,0 +1,21 @@
+.input {
+  padding: 4px;
+  width: 220px;
+}
+
+.button {
+  margin-left: 12px;
+  padding: 4px 16px;
+}
+
+.result {
+  background: #f6f6f6;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.api-usage {
+  background: #eee;
+  padding: 12px;
+  border-radius: 8px;
+}
