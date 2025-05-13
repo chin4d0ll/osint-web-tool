@@ -1,3 +1,34 @@
+@app.route('/api/social_footprint', methods=['POST'])
+def social_footprint():
+    data = request.get_json()
+    platform = data.get('platform')
+    username = data.get('username')
+    if not platform or not username:
+        return jsonify({'error': "Missing 'platform' or 'username' in request"}), 400
+
+    # MOCK: Replace with real API/scraping logic for each platform
+    mock_result = {
+        'platform': platform,
+        'username': username,
+        'profile_url': f'https://{platform}.com/{username}',
+        'name': 'John Doe',
+        'bio': 'This is a mock bio.',
+        'location': 'Bangkok, Thailand',
+        'work': 'Software Engineer',
+        'education': 'Chulalongkorn University',
+        'connections': 1234,
+        'public_posts': [
+            {'content': 'Hello world!', 'hashtags': ['#osint'], 'location': 'Bangkok', 'language': 'th'},
+            {'content': 'Security tips', 'hashtags': ['#security'], 'location': 'Bangkok', 'language': 'en'}
+        ],
+        'risk': {
+            'phone_found': False,
+            'email_found': True,
+            'address_found': False,
+            'privacy_score': 75
+        }
+    }
+    return jsonify({'result': mock_result})
 import os
 import psycopg2
 from flask import Flask, jsonify, request  # Add request

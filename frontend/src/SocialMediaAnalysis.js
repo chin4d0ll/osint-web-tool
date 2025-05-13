@@ -1,11 +1,67 @@
 import React from 'react';
 
+import React, { useState } from 'react';
+
 function SocialMediaAnalysis() {
+  const [platform, setPlatform] = useState('twitter');
+  const [username, setUsername] = useState('');
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setResult(null);
+    try {
+      const res = await fetch('/api/social_footprint', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ platform, username })
+      });
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      setResult(data.result);
+    } catch (err) {
+      setError('เกิดข้อผิดพลาดในการค้นหา');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <h3>Social Media Footprint Analysis</h3>
-      <p>ตรวจสอบโปรไฟล์และวิเคราะห์ข้อมูลจาก Instagram, Facebook, Twitter, LinkedIn</p>
-      {/* TODO: Add form and results display */}
+      <form onSubmit={handleSubmit} style={{ marginBottom: 24 }}>
+        <label>
+          Platform:
+          <select value={platform} onChange={e => setPlatform(e.target.value)} style={{ marginLeft: 8 }}>
+            <option value="twitter">Twitter/X</option>
+            <option value="facebook">Facebook</option>
+            <option value="instagram">Instagram</option>
+            <option value="linkedin">LinkedIn</option>
+          </select>
+        </label>
+        <input
+          type="text"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          placeholder="กรอก username หรือ profile id"
+          style={{ marginLeft: 12, padding: 4, width: 220 }}
+          required
+        />
+        <button type="submit" style={{ marginLeft: 12, padding: '4px 16px' }} disabled={loading}>
+          {loading ? 'กำลังค้นหา...' : 'ค้นหา'}
+        </button>
+      </form>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {result && (
+        <div style={{ background: '#f6f6f6', padding: 16, borderRadius: 8 }}>
+          <h4>ผลลัพธ์</h4>
+          <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>{JSON.stringify(result, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 }
