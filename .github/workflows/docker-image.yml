@@ -9,9 +9,10 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      # Add more permissions as needed for your workflow
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image

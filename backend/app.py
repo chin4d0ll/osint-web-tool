@@ -243,4 +243,11 @@ if __name__ == '__main__':
     init_db()
     print("Starting Flask backend server...")
     # Make sure to run on 0.0.0.0 to be accessible from outside the container in Codespaces
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=False)
+
+# Global error handler to avoid information exposure through exceptions
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # Log the exception internally (optional: use logging module)
+    print(f"Internal server error: {e}")
+    return jsonify({"error": "Internal server error"}), 500
