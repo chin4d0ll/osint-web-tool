@@ -1,5 +1,3 @@
-
-Markdown
 # OSINT Web Tool 🌐
 
 **A web-based tool for Open Source Intelligence (OSINT) gathering, enabling users to extract and analyze publicly available data for research, investigations, or cybersecurity.**
