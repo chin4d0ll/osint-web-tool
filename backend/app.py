@@ -1,3 +1,20 @@
+# --- Commercial API (mock) ---
+@app.route('/api/commercial', methods=['POST'])
+def commercial_api():
+    api_key = request.headers.get('x-api-key')
+    if not api_key or api_key != 'demo-key':
+        return jsonify({'error': 'Invalid or missing API key'}), 401
+    data = request.get_json()
+    query = data.get('query')
+    # MOCK: Replace with real commercial logic
+    mock_result = {
+        'query': query,
+        'status': 'success',
+        'data': {
+            'info': 'This is a mock response from the commercial API.'
+        }
+    }
+    return jsonify({'result': mock_result})
 # Risk Assessment API (mock)
 @app.route('/api/risk_assessment', methods=['POST'])
 def risk_assessment():
@@ -78,6 +95,22 @@ CORS(app)  # Enable CORS for all routes
 
 # ... (rest of your code)
 
+import os
+import psycopg2
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+app = Flask(__name__)
+CORS(app)
+
+# --- Social Media Footprint Analysis ---
 @app.route('/api/social_footprint', methods=['POST'])
 def social_footprint():
     data = request.get_json()
@@ -121,6 +154,27 @@ def social_footprint():
             'address_found': False,
             'privacy_score': 75
         }
+    }
+    return jsonify({'result': mock_result})
+
+# --- Risk Assessment Tool ---
+@app.route('/api/risk_assessment', methods=['POST'])
+def risk_assessment():
+    data = request.get_json()
+    target = data.get('target')
+    if not target:
+        return jsonify({'error': "Missing 'target' in request"}), 400
+
+    # MOCK: Replace with real risk analysis logic
+    mock_result = {
+        'target': target,
+        'risk_score': 82,
+        'summary': 'พบข้อมูลส่วนตัวรั่วไหลและมีความเสี่ยงสูงจากการใช้งานโซเชียลมีเดีย',
+        'details': [
+            'พบอีเมลในโพสต์สาธารณะ',
+            'มีการตั้งค่า privacy ต่ำ',
+            'พบข้อมูลในฐานข้อมูลรั่วไหล (breach)'
+        ]
     }
     return jsonify({'result': mock_result})
 @app.route('/api/social_footprint', methods=['POST'])
