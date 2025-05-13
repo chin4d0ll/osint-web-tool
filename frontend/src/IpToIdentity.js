@@ -30,7 +30,7 @@ function IpToIdentity() {
         <input
           type="text"
           value={ip}
-          onChange={e => setIp(e.target.value)}
+          onChange={(e) => setIp(e.target.value)}
           placeholder="Enter IP Address"
           style={{ padding: 4, width: 220 }}
           required
@@ -43,13 +43,27 @@ function IpToIdentity() {
       {result && (
         <div style={{ background: '#f6f6f6', padding: 16, borderRadius: 8 }}>
           <h4>Result</h4>
-          <div><b>IP:</b> {result.ip}</div>
-          <div><b>City:</b> {result.city}</div>
-          <div><b>Region:</b> {result.region}</div>
-          <div><b>Country:</b> {result.country}</div>
-          <div><b>Location:</b> {result.loc}</div>
-          <div><b>Org:</b> {result.org}</div>
-          <div><b>Timezone:</b> {result.timezone}</div>
+          <div>
+            <b>IP:</b> {result.ip}
+          </div>
+          <div>
+            <b>City:</b> {result.city}
+          </div>
+          <div>
+            <b>Region:</b> {result.region}
+          </div>
+          <div>
+            <b>Country:</b> {result.country}
+          </div>
+          <div>
+            <b>Location:</b> {result.loc}
+          </div>
+          <div>
+            <b>Org:</b> {result.org}
+          </div>
+          <div>
+            <b>Timezone:</b> {result.timezone}
+          </div>
         </div>
       )}
     </div>

@@ -1,4 +1,3 @@
-
 import './App.css';
 import React, { useState } from 'react';
 import Dashboard from './Dashboard';
@@ -14,7 +13,9 @@ function App() {
     <div className="App" style={{ maxWidth: 800, margin: '2rem auto', fontFamily: 'sans-serif' }}>
       <h2>OSINT Web Tool</h2>
       <nav style={{ marginBottom: 24 }}>
-        <button onClick={() => setPage('dashboard')} style={{ marginRight: 8 }}>Dashboard</button>
+        <button onClick={() => setPage('dashboard')} style={{ marginRight: 8 }}>
+          Dashboard
+        </button>
         <button onClick={() => setPage('social')}>Social Media Analysis</button>
         <button onClick={() => setPage('ip')}>IP-to-Identity</button>
         <button onClick={() => setPage('risk')}>Risk Assessment</button>
