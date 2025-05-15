@@ -1,6 +1,8 @@
 # CodeQL workflow intentionally disabled.
-# This file is present to prevent GitHub from enabling the default CodeQL workflow.
-# No jobs are defined.
-
-# This is a valid empty YAML mapping.
-{}
+on:
+  workflow_dispatch:
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "CodeQL workflow intentionally disabled."
