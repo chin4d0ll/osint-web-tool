@@ -4,5 +4,6 @@
     "main"
   ],
   "markdown.validate.enabled": true,
-  "nxConsole.nxWorkspacePath": "../.codespaces/.persistedshare/empty-folder"
+  "nxConsole.nxWorkspacePath": "../.codespaces/.persistedshare/empty-folder",
+  "accessibility.signalOptions.debouncePositionChanges": false
 }
