@@ -1,1 +1,6 @@
-## CodeQL workflow disabled to avoid conflict with GitHub default setup
+# CodeQL workflow intentionally disabled.
+# This file is present to prevent GitHub from enabling the default CodeQL workflow.
+# No jobs are defined.
+
+# This is a valid empty YAML mapping.
+{}

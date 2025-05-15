@@ -1,55 +1,34 @@
 # OSINT Web Tool
 
-An Open Source Intelligence (OSINT) web-based tool designed to gather and analyze publicly available information. This project consists of a Python Flask backend and a React frontend.
+A modern Open Source Intelligence (OSINT) platform for gathering and analyzing public data. This project features a Python Flask backend and a React frontend, containerized with Docker for easy deployment.
 
 ## Project Structure
 
-- `/backend`: Contains the Python Flask application, API endpoints, and logic for OSINT data collection and processing.
-- `/frontend`: Contains the React application for the user interface.
-- `/docker-compose.yml`: Defines the services for running the application (e.g., backend, frontend, database).
-- `/.devcontainer`: Contains configurations for developing in a Dev Container or GitHub Codespaces.
+- `backend/` — Python Flask API for OSINT data collection and analysis
+- `frontend/` — React web UI for user interaction
+- `docker-compose.yml` — Multi-service orchestration (backend, frontend, database)
 
-## Technologies Used
+## Quick Start (with Docker)
 
-- **Backend**: Python, Flask, Selenium, PostgreSQL (or other as configured)
-- **Frontend**: React, JavaScript/TypeScript, HTML, CSS
-- **Containerization**: Docker
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/chin4d0ll/osint-web-tool.git
+   cd osint-web-tool
+   ```
+2. Build and run all services:
+   ```bash
+   docker-compose up --build
+   ```
+3. Access the app:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5001
 
-## Getting Started
-
-### Prerequisites
-
-- Docker Desktop (or Docker Engine)
-- Git
-
-### Development Environment
-
-This project is configured to run in a [Dev Container](https://code.visualstudio.com/docs/remote/containers) or [GitHub Codespaces](https://github.com/features/codespaces).
-
-1.  **Clone the repository:**
-    ```bash
-    git clone <https://github.com/chin4d0ll/osint-web-tool.git>
-    cd osint-web-tool
-    ```
-2.  **Open in Dev Container/Codespaces:**
-    - If using VS Code, it should prompt you to "Reopen in Container".
-    - If using GitHub Codespaces, a pre-configured environment will be created for you.
-
-### Manual Setup (Alternative)
-
-Detailed instructions for manual setup of the backend and frontend can be found in their respective README files:
-
-- [`backend/README.md`](backend/README.md)
-- [`frontend/README.md`](frontend/README.md)
-
-## Running the Application
-
-(Instructions will depend on whether you are using Dev Containers, docker-compose directly, or running services manually. This section can be filled out in more detail later.)
+## Manual Development Setup
+- See [`backend/README.md`](backend/README.md) for backend setup
+- See [`frontend/README.md`](frontend/README.md) for frontend setup
 
 ## Contributing
-
-(Details on how to contribute to the project, coding standards, etc.)
+Pull requests are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before contributing.
 
 ## License
-
-(Specify the license for your project, e.g., MIT License)
+MIT License — see [LICENSE](LICENSE)
