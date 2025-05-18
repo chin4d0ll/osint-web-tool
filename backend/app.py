@@ -10,19 +10,32 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from flask_wtf.csrf import CSRFProtect
 
 # --- APP INIT ---
 app = Flask(__name__)
 CORS(app)
 
+# Enable CSRF protection
+csrf = CSRFProtect(app)
+
 
 @app.route("/api/social_footprint", methods=["POST"])
 def social_footprint():
     data = request.get_json()
+    if not data or not isinstance(data, dict):
+        return jsonify({"error": "Invalid input, JSON object expected"}), 400
+
     platform = data.get("platform")
     username = data.get("username")
-    if not platform or not username:
-        return jsonify({"error": "Missing 'platform' or 'username' in request"}), 400
+    if not platform or not isinstance(platform, str) or not platform.strip():
+        return jsonify(
+            {"error": "Missing or invalid 'platform'. It must be a non-empty string."}
+        ), 400
+    if not username or not isinstance(username, str) or not username.strip():
+        return jsonify(
+            {"error": "Missing or invalid 'username'. It must be a non-empty string."}
+        ), 400
 
     # MOCK: Replace with real API/scraping logic for each platform
     mock_result = {
@@ -63,9 +76,14 @@ def social_footprint():
 @app.route("/api/risk_assessment", methods=["POST"])
 def risk_assessment():
     data = request.get_json()
+    if not data or not isinstance(data, dict):
+        return jsonify({"error": "Invalid input, JSON object expected"}), 400
+
     target = data.get("target")
-    if not target:
-        return jsonify({"error": "Missing 'target' in request"}), 400
+    if not target or not isinstance(target, str) or not target.strip():
+        return jsonify(
+            {"error": "Missing or invalid 'target' in request. It must be a non-empty string."}
+        ), 400
 
     # MOCK: Replace with real risk analysis logic
     mock_result = {
@@ -85,10 +103,17 @@ def risk_assessment():
 @app.route("/api/commercial", methods=["POST"])
 def commercial_api():
     api_key = request.headers.get("x-api-key")
-    if not api_key or api_key != "demo-key":
+    if not api_key or api_key != "demo-key":  # In a real app, use a more secure key management
         return jsonify({"error": "Invalid or missing API key"}), 401
+    
     data = request.get_json()
+    if not data or not isinstance(data, dict):
+        return jsonify({"error": "Invalid input, JSON object expected"}), 400
+
     query = data.get("query")
+    if not query or not isinstance(query, str) or not query.strip():
+        return jsonify({"error": "Missing or invalid 'query' in request. It must be a non-empty string."}), 400
+
     # MOCK: Replace with real commercial logic
     mock_result = {
         "query": query,
@@ -374,6 +399,22 @@ def handle_search():
             "result": mock_result,
         }
     )
+
+
+@app.route("/api/check-username", methods=["POST"])
+def check_username():
+    data = request.get_json()
+    if not data or not isinstance(data, dict):
+        return jsonify({"error": "Invalid input, JSON object expected"}), 400
+
+    username = data.get("username")
+    if not username or not isinstance(username, str) or not username.strip():
+        return jsonify({"error": "Missing or invalid 'username'. It must be a non-empty string."}), 400
+
+    # MOCK: Replace with real username validation logic
+    if username == "admin":
+        return jsonify({"message": "Username is not available."}), 200
+    return jsonify({"message": "Username is available."}), 200
 
 
 if __name__ == "__main__":
