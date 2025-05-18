@@ -32,5 +32,15 @@ services:
       - ./frontend:/app
     command: ["npm", "install"]
 
+  backend:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: osintuser
+      DB_PASS: osintpassword
+      DB_NAME: osint_db
+
 volumes:
   postgres_data:

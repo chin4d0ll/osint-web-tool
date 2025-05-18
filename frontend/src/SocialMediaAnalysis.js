@@ -28,6 +28,25 @@ function SocialMediaAnalysis() {
     }
   };
 
+  const handleCheckUsername = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/check-username', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username }),
+      });
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      alert(`Username check result: ${data.message}`);
+    } catch (err) {
+      setError('An error occurred while checking the username.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <h3>Social Media Footprint Analysis</h3>
@@ -57,6 +76,13 @@ function SocialMediaAnalysis() {
           {loading ? 'Searching...' : 'Search'}
         </button>
       </form>
+      <button
+        onClick={handleCheckUsername}
+        style={{ marginTop: 12, padding: '4px 16px' }}
+        disabled={loading || !username.trim()}
+      >
+        {loading ? 'Checking...' : 'Check Username'}
+      </button>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {result && (
         <div style={{ background: '#f6f6f6', padding: 16, borderRadius: 8 }}>
