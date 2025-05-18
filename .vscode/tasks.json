@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"args": [
-				"app.py"
+				"backend/app.py"
 			],
 			"command": "python",
 			"group": "none",
