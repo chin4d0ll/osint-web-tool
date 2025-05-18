@@ -1,36 +1,10 @@
-version: '3.8'
 services:
-  app:
-    build:
-      context: . # Build from the root of the project
-      dockerfile: .devcontainer/Dockerfile # Using the Dockerfile we created
-    volumes:
-      # Mount the entire project folder to /workspaces/osint-web-tool in the container
-      # Note: Codespaces typically handles this automatically when using dockerComposeFile.
-      # This line ensures consistency if running docker-compose manually.
-      - .:/workspaces/osint-web-tool:cached
-    command: sleep infinity # Keep the container running
-    # Features from devcontainer.json will be applied to this service by Codespaces
-
-  db:
-    image: postgres:15
-    container_name: osint_db
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: osintuser
-      POSTGRES_PASSWORD: osintpassword
-      POSTGRES_DB: osintdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
   frontend:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-    command: ["npm", "install"]
-
-volumes:
-  postgres_data:
+    image: frontend
+    build:
+      context: frontend
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000

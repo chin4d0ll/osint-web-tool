@@ -1,0 +1,5 @@
+FROM python:3.11-slim
+WORKDIR /app
+COPY backend /app
+RUN pip install --no-cache-dir flask flask-cors selenium requests
+CMD ["python", "app.py"]
