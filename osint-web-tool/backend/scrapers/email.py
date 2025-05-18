@@ -1,9 +1,10 @@
 import requests
 
+
 def scrape_email(email):
     headers = {
         "User-Agent": "Mozilla/5.0",
-        "hibp-api-key": "your_api_key_here"  # Replace with real API key
+        "hibp-api-key": "your_api_key_here",  # Replace with real API key
     }
     try:
         url = f"https://haveibeenpwned.com/api/v3/breachedaccount/{email}"
@@ -15,7 +16,7 @@ def scrape_email(email):
             return {
                 "platform": "email",
                 "email": email,
-                "breaches": [item["Name"] for item in data]
+                "breaches": [item["Name"] for item in data],
             }
         else:
             return {"error": f"Status code {response.status_code}"}

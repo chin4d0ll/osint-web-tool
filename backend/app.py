@@ -1,4 +1,3 @@
-import os
 import logging
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -12,6 +11,7 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route("/api/social_footprint", methods=["POST"])
 def social_footprint():
     """Mock social footprint endpoint. Replace with real logic per platform."""
@@ -19,7 +19,9 @@ def social_footprint():
     platform = data.get("platform")
     username = data.get("username")
     if not platform or not username:
-        return jsonify({"error": "Missing 'platform' or 'username' in request"}), 400
+        return jsonify(
+            {"error": "Missing 'platform' or 'username' in request"}
+        ), 400
     mock_result = {
         "platform": platform,
         "username": username,
@@ -31,8 +33,18 @@ def social_footprint():
         "education": "Chulalongkorn University",
         "connections": 1234,
         "public_posts": [
-            {"content": "Hello world!", "hashtags": ["#osint"], "location": "Bangkok", "language": "en"},
-            {"content": "Security tips", "hashtags": ["#security"], "location": "Bangkok", "language": "en"},
+            {
+                "content": "Hello world!",
+                "hashtags": ["#osint"],
+                "location": "Bangkok",
+                "language": "en",
+            },
+            {
+                "content": "Security tips",
+                "hashtags": ["#security"],
+                "location": "Bangkok",
+                "language": "en",
+            },
         ],
         "risk": {
             "phone_found": False,
@@ -42,6 +54,7 @@ def social_footprint():
         },
     }
     return jsonify({"result": mock_result})
+
 
 @app.route("/api/risk_assessment", methods=["POST"])
 def risk_assessment():
@@ -53,7 +66,9 @@ def risk_assessment():
     mock_result = {
         "target": target,
         "risk_score": 82,
-        "summary": "Personal data leak detected and high risk from social media usage.",
+        "summary": (
+            "Personal data leak detected and high risk from social media usage."
+        ),
         "details": [
             "Email found in public posts",
             "Low privacy settings detected",
@@ -61,6 +76,7 @@ def risk_assessment():
         ],
     }
     return jsonify({"result": mock_result})
+
 
 @app.route("/api/commercial", methods=["POST"])
 def commercial_api():
@@ -77,9 +93,11 @@ def commercial_api():
     }
     return jsonify({"result": mock_result})
 
+
 @app.route("/", methods=["GET"])
 def home():
     return "Hello from OSINT Tool Backend!"
+
 
 @app.route("/db_test", methods=["GET"])
 def db_test():
@@ -91,11 +109,27 @@ def db_test():
             db_version = cur.fetchone()
             cur.close()
             conn.close()
-            return jsonify({"message": "Successfully connected to database!", "db_version": db_version})
+            return jsonify(
+                {
+                    "message": "Successfully connected to database!",
+                    "db_version": db_version,
+                }
+            )
         except Exception as e:
-            return jsonify({"message": "Database connection successful, but query failed.", "error": str(e)}), 500
+            return (
+                jsonify(
+                    {
+                        "message": (
+                            "Database connection successful, but query failed."
+                        ),
+                        "error": str(e),
+                    }
+                ),
+                500,
+            )
     else:
         return jsonify({"message": "Failed to connect to database."}), 500
+
 
 @app.route("/ip_lookup", methods=["GET"])
 def ip_lookup():
@@ -120,6 +154,7 @@ def ip_lookup():
         logging.error(f"Something went wrong: {err}")
         return jsonify({"error": f"Something went wrong: {err}"}), 500
 
+
 @app.route("/scrape_twitter_profile", methods=["GET"])
 def scrape_twitter_profile_route():
     """Scrape Twitter profile data for a given username."""
@@ -129,40 +164,54 @@ def scrape_twitter_profile_route():
     profile_data = scrape_twitter_profile(username)
     return jsonify(profile_data)
 
+
 @app.route("/api/search", methods=["POST"])
 def handle_search():
     data = request.get_json()
     search_type = data.get("type")
     search_value = data.get("value")
-    if not search_type or not search_value:
+    if not isinstance(search_type, str) or not isinstance(search_value, str) or \
+       not search_type.strip() or not search_value.strip():
         return jsonify({"error": "Missing 'type' or 'value' in request"}), 400
     mock_result = {
         "username": search_value if search_type == "username" else None,
         "email": search_value if search_type == "email" else None,
         "ip": search_value if search_type == "ip" else None,
         "social_profiles": [
-            {"platform": "Facebook", "found": True, "url": f"https://facebook.com/{search_value}"},
+            {
+                "platform": "Facebook",
+                "found": True,
+                "url": f"https://facebook.com/{search_value}",
+            },
             {"platform": "Twitter", "found": False, "url": None},
-            {"platform": "Instagram", "found": True, "url": f"https://instagram.com/{search_value}"},
+            {
+                "platform": "Instagram",
+                "found": True,
+                "url": f"https://instagram.com/{search_value}",
+            },
         ],
         "risk_score": 42,
         "breach_found": True,
         "breach_sources": ["HaveIBeenPwned", "Dehashed"],
     }
-    return jsonify({
-        "message": "Search completed (mock)",
-        "search_type": search_type,
-        "search_value": search_value,
-        "result": mock_result,
-    })
+    return jsonify(
+        {
+            "message": "Search completed (mock)",
+            "search_type": search_type,
+            "search_value": search_value,
+            "result": mock_result,
+        }
+    )
+
 
 @app.errorhandler(Exception)
 def handle_exception(e):
     logging.error(f"Internal server error: {e}")
     return jsonify({"error": "Internal server error"}), 500
 
+
 if __name__ == "__main__":
     logging.info("Attempting to initialize database schema...")
     init_db()
     logging.info("Starting Flask backend server...")
-    app.run(host="0.0.0.0", port=5001, debug=False)
+    app.run(host="0.0.0.0", port=5001)  # เปลี่ยนพอร์ตเป็น 5001

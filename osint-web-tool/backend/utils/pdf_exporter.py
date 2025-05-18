@@ -3,6 +3,7 @@ from reportlab.pdfgen import canvas
 from database import load_result
 import os
 
+
 def export_to_pdf(username, platform="github"):
     data = load_result(username, platform)
     if not data:

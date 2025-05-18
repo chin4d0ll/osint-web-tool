@@ -1,5 +1,6 @@
 import requests
 
+
 def scrape_github(username):
     url = f"https://api.github.com/users/{username}"
     response = requests.get(url)
@@ -15,5 +16,5 @@ def scrape_github(username):
         "bio": data.get("bio"),
         "followers": data.get("followers"),
         "public_repos": data.get("public_repos"),
-        "location": data.get("location")
+        "location": data.get("location"),
     }

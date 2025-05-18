@@ -6,5 +6,5 @@ def scrape_twitter(username):
         "profile_url": f"https://twitter.com/{username}",
         "bio": "Mock bio for Twitter",
         "followers": 123,
-        "tweets": 456
+        "tweets": 456,
     }

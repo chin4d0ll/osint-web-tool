@@ -1,11 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 def scrape_tiktok(username):
     url = f"https://www.tiktok.com/@{username}"
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
+    headers = {"User-Agent": "Mozilla/5.0"}
 
     try:
         response = requests.get(url, headers=headers)
@@ -20,7 +19,7 @@ def scrape_tiktok(username):
             "profile_url": url,
             "bio": description,
             "followers": "N/A",
-            "likes": "N/A"
+            "likes": "N/A",
         }
     except Exception as e:
         return {"error": str(e)}

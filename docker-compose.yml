@@ -1,8 +1,8 @@
 services:
-  frontend:
-    image: frontend
+  osintwebtool:
+    image: osintwebtool
     build:
-      context: frontend
+      context: .
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production

@@ -10,6 +10,13 @@
                 "package": "${workspaceFolder}/frontend/package.json",
                 "localRoot": "${workspaceFolder}/frontend"
             }
+        },
+        {
+            "name": "Docker Node.js Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "platform": "node"
         }
     ]
 }

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 def scrape_linkedin(name):
     query = f"site:linkedin.com/in/ {name}"
     url = f"https://duckduckgo.com/html/?q={query.replace(' ', '+')}"
@@ -13,7 +14,7 @@ def scrape_linkedin(name):
         return {
             "platform": "linkedin",
             "query": name,
-            "results": results[:5]  # Limit to top 5
+            "results": results[:5],  # Limit to top 5
         }
     except Exception as e:
         return {"error": str(e)}
