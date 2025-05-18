@@ -887,7 +887,7 @@
     "ghcr.io/devcontainers-extra/features/terraform-docs:1": {},
     "ghcr.io/devcontainers-extra/features/terraform-ls-asdf:2": {},
     "ghcr.io/devcontainers-extra/features/terraformer:1": {},
-    "ghcr.io/devcontainers-extra/features/terragrunt:1": {},
+    "ghcrcr.io/devcontainers-extra/features/terragrunt:1": {},
     "ghcr.io/devcontainers-extra/features/terramate:1": {},
     "ghcr.io/devcontainers-extra/features/terrascan:1": {},
     "ghcr.io/devcontainers-extra/features/tfc-agent-asdf:2": {},
@@ -1012,7 +1012,7 @@
     "ghcr.io/grafana/devcontainer-features/k6:1": {},
     "ghcr.io/grafana/devcontainer-features/xk6:1": {}
   },
-  "postCreateCommand": "echo 'Dev Container (Python from feature, Node from image) ready!'",
+  "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -1023,7 +1023,7 @@
     }
   },
   "forwardPorts": [
-    5001,
+    5000,
     3000
   ]
 }
