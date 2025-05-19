@@ -112,7 +112,7 @@ This tool is designed for educational purposes only. Do not use it for illegal a
 If you have any questions or feedback
 
 - **GitHub Issues:** Submit here
-- **Email:** chin4d0ll@example.com
+- **Email:** chin4d0ll@gmail.com
 
 ---
 
