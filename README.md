@@ -122,4 +122,4 @@ If you find this tool helpful:
 
 - 🌟 Star the repo
 - 🛠️ Contribute your code
-- ☕ Buy us a coffee (coming soon!)
+- (coming soon!)
