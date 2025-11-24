@@ -14,6 +14,6 @@ jobs:
       contents: read
       # Add more permissions as needed for your workflow
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
